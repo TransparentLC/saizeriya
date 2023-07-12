@@ -1,1 +1,2 @@
+brotli == 1.*
 fonttools == 4.*
