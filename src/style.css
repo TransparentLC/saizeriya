@@ -1,0 +1,79 @@
+@import "nes.css/css/nes-core.css";
+
+@font-face {
+    font-family: "Fusion Pixel 12px Proportional";
+    /* src: url("fusion-pixel-font/fusion-pixel-12px-proportional.woff2"); */
+    src: url("fusion-pixel-font/fusion-pixel-12px-proportional-subset.woff2");
+    font-display: swap;
+}
+
+html {
+    font-size: 12px;
+}
+
+body {
+    font-family: "Fusion Pixel 12px Proportional", sans-serif;
+    text-rendering: optimizeLegibility;
+    margin: 0 auto;
+    padding: 32px;
+    max-width: 720px;
+}
+
+[v-scope] {
+    display: none;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.col-2, .col-1-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0 1.5rem;
+}
+
+a {
+    color: unset;
+    text-decoration: underline;
+}
+
+small {
+    font-size: 1rem;
+}
+
+.nes-radio:checked + span::before,
+.nes-checkbox + span::before, .nes-checkbox:checked + span::before {
+    top: 10px;
+}
+
+body, .nes-container.with-title > .title {
+    font-size: 2rem;
+}
+
+@media (max-width: 640px) {
+    body, .nes-container.with-title > .title {
+        font-size: 1rem;
+    }
+
+    .col-1-2 {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .nes-input, .nes-textarea {
+        padding: .25rem .5rem;
+    }
+
+    .nes-container, .nes-container.is-rounded {
+        padding: 1rem 1rem;
+    }
+
+    .nes-field.is-inline > label {
+        margin-right: 1rem;
+    }
+
+    .nes-radio:checked + span::before,
+    .nes-checkbox + span::before, .nes-checkbox:checked + span::before {
+        top: 1px;
+    }
+}
