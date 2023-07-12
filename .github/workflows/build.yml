@@ -1,0 +1,48 @@
+name: build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: latest
+          architecture: x64
+          check-latest: true
+          cache: npm
+          cache-dependency-path: package.json
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+          cache: pip
+      - name: Install npm dependencies
+        run: npm install
+      - name: Install pip dependencies
+        run: pip install -r requirements.txt
+      - name: Font subsetting
+        run: |
+          cd src/fusion-pixel-font
+          # https://github.com/TakWolf/fusion-pixel-font/releases
+          wget -O fusion-pixel-font-12px-proportional-woff2.zip https://github.com/TakWolf/fusion-pixel-font/releases/download/snapshot/fusion-pixel-font-12px-proportional-woff2-v2023.07.11.zip
+          unzip -o fusion-pixel-font-12px-proportional-woff2.zip
+          node create-subset.js
+      - name: Build
+        run: npm run build
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
+          publish_branch: gh-pages
+      - name: Upload stats
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-stats
+          path: stats.html
