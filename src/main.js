@@ -36,9 +36,6 @@ const randomInt = (min, max) => min + Math.floor(Math.random() * (max - min + 1)
  */
 const randomChoice = arr => arr[randomInt(0, arr.length - 1)];
 
-let isWechat = false;
-addEventListener('WeixinJSBridgeReady', () => isWechat = true);
-
 createApp({
     showResult: false,
     menuPriceMin,
@@ -268,7 +265,7 @@ createApp({
             },
         });
         URL.revokeObjectURL(this.resultImage);
-        if (isWechat) {
+        if (navigator.userAgent.includes('MicroMessenger')) {
             this.resultImage = canvas.toDataURL('image/png');
         } else {
             this.resultImage = URL.createObjectURL(await new Promise(resolve => canvas.toBlob(resolve, 'image/png')));
