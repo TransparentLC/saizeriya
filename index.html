@@ -38,7 +38,31 @@
                     class="nes-btn"
                     style="display:block;width:100%;margin:1rem 0"
                 >设定为平均的 +/- 20%</button>
-                <label style="margin:.5rem 0">
+                <div style="display:flex">
+                    <span style="flex-grow:1">畅饮</span>
+                    <label style="margin-left:1rem">
+                        <input
+                            v-model="drinkProbability" :value="1"
+                            name="drink-probability"
+                            type="radio" class="nes-radio"
+                        ><span>点</span>
+                    </label>
+                    <label style="margin-left:1rem">
+                        <input
+                            v-model="drinkProbability" :value="0"
+                            name="drink-probability"
+                            type="radio" class="nes-radio"
+                        ><span>不点</span>
+                    </label>
+                    <label style="margin-left:1rem">
+                        <input
+                            v-model="drinkProbability" :value=".5"
+                            name="drink-probability"
+                            type="radio" class="nes-radio"
+                        ><span title="50%概率">随机</span>
+                    </label>
+                </div>
+                <label>
                     <input v-model="drinkMix" type="checkbox" class="nes-checkbox">
                     <span>“自由搭配的乐趣！” <a href="https://saizeriya.oss-cn-guangzhou.aliyuncs.com/upload/portal/20230109/202301091654376284.jpg" target="_blank" rel="noreferrer noopener">(?)</a></span>
                 </label>
@@ -52,13 +76,15 @@
                                     v-model="item.enabled" :value="true"
                                     :name="`category-filter-${item.category}`"
                                     type="radio" class="nes-radio"
-                                ><span>Yes</span></label>
+                                ><span>Yes</span>
+                            </label>
                             <label style="margin-left:1rem">
                                 <input
                                     v-model="item.enabled" :value="false"
                                     :name="`category-filter-${item.category}`"
                                     type="radio" class="nes-radio"
-                                ><span>No</span></label>
+                                ><span>No</span>
+                            </label>
                         </div>
                     </div>
                     <div class="col-2">

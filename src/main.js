@@ -46,6 +46,7 @@ createApp({
     blacklistExpr: '',
     /** @type {SaizeriyaMenuItem[]} */
     result: [],
+    drinkProbability: .5,
     drinkMix: false,
     drinkRecommendation: '',
     qrImage: '',
@@ -114,8 +115,8 @@ createApp({
             [m[i], m[x]] = [m[x], m[i]];
         }
 
-        // 预算平均值达到30且未添加黑名单，则有50%概率添加畅饮
-        const enableDrink = (!blacklistId.has(menuDrink.id) && (budgetMin + budgetMax >= 30)) ? (Math.random() < .5) : false;
+        // 是否添加畅饮
+        const enableDrink = Math.random() < this.drinkProbability && budgetMin >= menuDrink.price;
         if (enableDrink) {
             budgetMin -= menuDrink.price;
             budgetMax -= menuDrink.price;
@@ -273,3 +274,18 @@ createApp({
         document.getElementById('dialog-image').showModal();
     },
 }).mount();
+
+/**
+ * @param {String} label
+ * @param {String} content
+ * @param {String} color
+ */
+const consoleBadge = (label, content, color) => console.log(
+    `%c ${label} %c ${content} `,
+    'color:#fff;background-color:#555;border-radius:3px 0 0 3px',
+    `color:#fff;background-color:${color};border-radius:0 3px 3px 0`
+);
+
+consoleBadge('Project', 'saizeriya', '#07c');
+consoleBadge('Author', 'TransparentLC', '#f84');
+consoleBadge('Build Time', __BUILD_TIME__, '#f48');
