@@ -21,4 +21,4 @@ https://akarin.dev/saizeriya/
 ## 借物表
 
 * [NES.css](https://nostalgic-css.github.io/NES.css/)
-* [缝合像素字体](https://fusion-pixel-font.takwolf.com)
+* [缝合像素字体](https://fusion-pixel-font.takwolf.com/)

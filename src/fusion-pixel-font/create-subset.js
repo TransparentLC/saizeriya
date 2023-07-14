@@ -21,15 +21,18 @@ for (const f of [
     s.split('').forEach(e => charset.add(e));
 }
 
-const charsetString = Array.from(charset).join('');
-console.log(charsetString.length);
-console.log(charsetString);
-
-fs.writeFileSync('charset.txt', charsetString);
-childProcess.execFileSync('pyftsubset', [
-    'fusion-pixel-12px-proportional.woff2',
-    '--text-file=charset.txt',
-    '--output-file=fusion-pixel-12px-proportional-subset.woff2',
-    '--flavor=woff2',
-]);
+fs.writeFileSync('charset.txt', Array.from(charset).join(''));
+childProcess.execFileSync(
+    'pyftsubset',
+    [
+        'fusion-pixel-12px-proportional.woff2',
+        '--text-file=charset.txt',
+        '--output-file=fusion-pixel-12px-proportional-subset.woff2',
+        '--flavor=woff2',
+        '--verbose',
+    ],
+    {
+        stdio: 'inherit',
+    },
+);
 fs.unlinkSync('charset.txt');
