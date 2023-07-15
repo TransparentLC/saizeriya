@@ -30,8 +30,9 @@ jobs:
         run: |
           cd src/fusion-pixel-font
           # https://github.com/TakWolf/fusion-pixel-font/releases
-          wget -O fusion-pixel-font-12px-proportional-woff2.zip https://github.com/TakWolf/fusion-pixel-font/releases/download/snapshot/fusion-pixel-font-12px-proportional-woff2-v2023.07.11.zip
-          unzip -o fusion-pixel-font-12px-proportional-woff2.zip
+          # wget -O fusion-pixel-font-12px-proportional-woff2.zip https://github.com/TakWolf/fusion-pixel-font/releases/download/snapshot/fusion-pixel-font-12px-proportional-woff2-v2023.07.11.zip
+          # unzip -o fusion-pixel-font-12px-proportional-woff2.zip
+          wget https://fusion-pixel-font.takwolf.com/fusion-pixel-12px-proportional.woff2
           node create-subset.js
       - name: Build
         run: npm run build
