@@ -13,11 +13,13 @@ for (const f of [
         s = s.replace(/^\s*\/\/\s*.*$/gm, '');
     }
     if (f.endsWith('.js') || f.endsWith('.css')) {
-        s = s.replace(/\/\*[\s\S]*\*\//g, '');
+        s = s.replace(/\/\*[\s\S]*?\*\//g, '');
     }
     if (f.endsWith('.html')) {
-        s = s.replace(/<!--[\s\S]*-->/g, '');
+        s = s.replace(/<!--[\s\S]*?-->/g, '');
     }
+    console.log(f);
+    console.log(s);
     s.split('').forEach(e => charset.add(e));
 }
 
