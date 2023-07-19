@@ -25,9 +25,9 @@ fs.writeFileSync('charset.txt', Array.from(charset).join(''));
 childProcess.execFileSync(
     'pyftsubset',
     [
-        'fusion-pixel-12px-proportional.woff2',
+        'fusion-pixel-12px-proportional-zh_hans.woff2',
         '--text-file=charset.txt',
-        '--output-file=fusion-pixel-12px-proportional-subset.woff2',
+        '--output-file=fusion-pixel-12px-proportional-zh_hans-subset.woff2',
         '--flavor=woff2',
         '--verbose',
     ],

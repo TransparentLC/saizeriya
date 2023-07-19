@@ -4,7 +4,7 @@
 
 LICENSE
 create-subset.js # 子集化用的脚本
-fusion-pixel-12px-proportional.woff2
-fusion-pixel-12px-proportional-subset.woff2 # 实际使用的是这个子集化之后的字体
+fusion-pixel-12px-proportional-zh_hans.woff2 # 其他语言版本略
+fusion-pixel-12px-proportional-zh_hans-subset.woff2 # 实际使用的是这个子集化之后的字体
 OFL.txt
 README.txt

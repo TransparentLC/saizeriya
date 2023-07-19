@@ -30,7 +30,7 @@ pnpm-lock.yaml
 stats.html
 
 src/fusion-pixel-font/LICENSE
-src/fusion-pixel-font/fusion-pixel-12px-proportional.woff2
-src/fusion-pixel-font/fusion-pixel-12px-proportional-subset.woff2
+src/fusion-pixel-font/fusion-pixel-12px-proportional-*.woff2
+src/fusion-pixel-font/fusion-pixel-12px-proportional-*-subset.woff2
 src/fusion-pixel-font/OFL.txt
 src/saizeriya-menu/menu.json
