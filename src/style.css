@@ -19,10 +19,6 @@ body {
     max-width: 720px;
 }
 
-[v-scope] {
-    display: none;
-}
-
 .nowrap {
     white-space: nowrap;
 }

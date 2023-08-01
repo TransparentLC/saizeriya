@@ -37,6 +37,7 @@ const randomInt = (min, max) => min + Math.floor(Math.random() * (max - min + 1)
 const randomChoice = arr => arr[randomInt(0, arr.length - 1)];
 
 createApp({
+    isDark: false,
     showResult: false,
     menuPriceMin,
     menuPriceTotal,
@@ -245,7 +246,11 @@ createApp({
         ]);
         const canvas = await html2canvas(document.getElementById('menu-result'), {
             useCORS: true,
-            onclone: document => {
+            onclone: (/** @type {Document} */ document) => {
+                Array.from(document.querySelectorAll('.is-dark')).forEach(e => e.classList.remove('is-dark'));
+                const preloadStyle = document.getElementById('preload-style');
+                preloadStyle.parentNode.removeChild(preloadStyle);
+
                 const container = document.getElementById('menu-result');
                 container.style.cssText = 'padding:24px';
                 container.insertBefore(document.getElementById('title').cloneNode(true), container.firstChild);
@@ -272,6 +277,12 @@ createApp({
             this.resultImage = URL.createObjectURL(await new Promise(resolve => canvas.toBlob(resolve, 'image/png')));
         }
         document.getElementById('dialog-image').showModal();
+    },
+
+    mounted() {
+        const m = matchMedia('(prefers-color-scheme:dark)');
+        m.addEventListener('change', () => this.isDark = m.matches);
+        this.isDark = m.matches;
     },
 }).mount();
 

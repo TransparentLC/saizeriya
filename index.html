@@ -6,12 +6,28 @@
         <meta name="author" content="TransparentLC">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <title>萨莉亚随机点餐</title>
+        <style id="preload-style">
+            [v-scope] {
+                display: none;
+            }
+
+            @media (prefers-color-scheme: dark) {
+                body {
+                    background-color: #212529 !important;
+                    color: #fff !important;
+                }
+            }
+        </style>
     </head>
     <body>
-        <div v-scope>
+        <div v-scope @vue:mounted="mounted">
             <h1 id="title" style="text-align:center;font-size:4rem">萨莉亚！<br>随机点餐</h1>
 
-            <div v-show="!showResult" class="nes-container with-title" style="margin:2rem 0">
+            <div
+                v-show="!showResult"
+                class="nes-container with-title" :class="{'is-dark': isDark}"
+                style="margin:2rem 0"
+            >
                 <h2 class="title">设定</h2>
                 <div class="nes-field is-inline" style="display:flex;margin-bottom:1rem">
                     <label class="nowrap" style="margin-bottom:0">预算</label>
@@ -19,7 +35,7 @@
                         <input
                             v-model="budgetMin"
                             type="number"
-                            class="nes-input is-error"
+                            class="nes-input is-error" :class="{'is-dark': isDark}"
                             placeholder="下限"
                             min="1"
                         >
@@ -27,7 +43,7 @@
                         <input
                             v-model="budgetMax"
                             type="number"
-                            class="nes-input is-success"
+                            class="nes-input is-success" :class="{'is-dark': isDark}"
                             placeholder="上限"
                             min="1"
                         >
@@ -44,26 +60,26 @@
                         <input
                             v-model="drinkProbability" :value="1"
                             name="drink-probability"
-                            type="radio" class="nes-radio"
+                            type="radio" class="nes-radio" :class="{'is-dark': isDark}"
                         ><span>点</span>
                     </label>
                     <label style="margin-left:1rem">
                         <input
                             v-model="drinkProbability" :value="0"
                             name="drink-probability"
-                            type="radio" class="nes-radio"
+                            type="radio" class="nes-radio" :class="{'is-dark': isDark}"
                         ><span>不点</span>
                     </label>
                     <label style="margin-left:1rem">
                         <input
                             v-model="drinkProbability" :value=".5"
                             name="drink-probability"
-                            type="radio" class="nes-radio"
+                            type="radio" class="nes-radio" :class="{'is-dark': isDark}"
                         ><span title="50%概率">随机</span>
                     </label>
                 </div>
                 <label>
-                    <input v-model="drinkMix" type="checkbox" class="nes-checkbox">
+                    <input v-model="drinkMix" type="checkbox" class="nes-checkbox" :class="{'is-dark': isDark}">
                     <span>“自由搭配的乐趣！” <a href="https://saizeriya.oss-cn-guangzhou.aliyuncs.com/upload/portal/20230109/202301091654376284.jpg" target="_blank" rel="noreferrer noopener">(?)</a></span>
                 </label>
                 <details>
@@ -105,7 +121,7 @@
                         <input
                             v-model="blacklistExpr"
                             type="text"
-                            class="nes-input"
+                            class="nes-input" :class="{'is-dark': isDark}"
                             placeholder="输入以空格分隔的菜品编码"
                         >
                     </div>
@@ -144,7 +160,7 @@
                     <div
                         v-for="item in result"
                         :key="item.id"
-                        class="nes-container is-rounded"
+                        class="nes-container is-rounded" :class="{'is-dark': isDark}"
                         style="display:flex;align-items:center;margin:1rem 0"
                     >
                         <div style="flex-grow:1">
@@ -201,7 +217,11 @@
                 </small>
             </div>
 
-            <dialog id="dialog-image" class="nes-dialog is-rounded" style="text-align:center;line-height:1.5rem">
+            <dialog
+                id="dialog-image"
+                class="nes-dialog is-rounded" :class="{'is-dark': isDark}"
+                style="text-align:center;line-height:1.5rem"
+            >
                 <form method="dialog">
                     <img :src="resultImage" style="display:block;margin:0 auto;max-height:60vh">
                     <small>如果点击“保存”没有反应<br>请尝试长按/右键图片进行另存为操作(　ﾟ 3ﾟ)</small>
