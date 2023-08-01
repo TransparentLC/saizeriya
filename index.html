@@ -91,14 +91,16 @@
                                 <input
                                     v-model="item.enabled" :value="true"
                                     :name="`category-filter-${item.category}`"
-                                    type="radio" class="nes-radio"
+                                    type="radio"
+                                    class="nes-radio" :class="{'is-dark': isDark}"
                                 ><span>Yes</span>
                             </label>
                             <label style="margin-left:1rem">
                                 <input
                                     v-model="item.enabled" :value="false"
                                     :name="`category-filter-${item.category}`"
-                                    type="radio" class="nes-radio"
+                                    type="radio"
+                                    class="nes-radio" :class="{'is-dark': isDark}"
                                 ><span>No</span>
                             </label>
                         </div>
