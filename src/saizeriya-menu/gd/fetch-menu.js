@@ -59,6 +59,7 @@ const fn = async storeId => {
             '1200000212', // 人气商品
         ].includes($(el).attr('data-id'))) return;
         const [k, v] = $(el).find('.cp-box-right-box-info-right > .title').text().trim().split('\u00a0', 2);
+        if (parseInt(k) === 1777) return; // 无需畅饮
         menuPartial.set(parseInt(k), {
             id: parseInt(k),
             name: v,
@@ -82,4 +83,4 @@ for await (const menuPartial of asyncPool(16, range(12000000, 12000250), fn)) {
     menuPartial.forEach((v, k) => menu.set(k, v));
 }
 
-fs.writeFileSync('menu.json', JSON.stringify(Array.from(menu.values()), null, 4));
+fs.writeFileSync('menu-raw.json', JSON.stringify(Array.from(menu.values()), null, 4));

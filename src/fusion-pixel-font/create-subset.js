@@ -5,8 +5,8 @@ const charset = new Set('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRS
 
 for (const f of [
     '../main.js',
-    '../menu.json',
     '../../index.html',
+    ...fs.readdirSync('../saizeriya-menu').filter(e => e !== 'README.md').map(e => [`../saizeriya-menu/${e}/index.js`, `../saizeriya-menu/${e}/menu.json`]).flat(),
 ]) {
     let s = fs.readFileSync(f, {encoding: 'utf-8'})
     if (f.endsWith('.js')) {

@@ -1,49 +1,50 @@
 import { createApp } from 'petite-vue';
+import { randomChoice, randomInt } from './util.js';
 
 /**
  * @typedef {{
- *  id: Number,
+ *  id: Number | String,
  *  name: String,
  *  price: Number,
  *  category: String,
- *  image: Record<String, String>,
+ *  image: [Record<String, String>],
  * }} SaizeriyaMenuItem
+ *
+ * @typedef {{
+ *  priceFormat: (x: Number) => String, // 价格格式化，例如把32转换成￥32.00这样
+ *  priceGCD: Number, // 价格的最大公因数，例如日本萨莉亚的价格都是10日元的倍数，那么在菜单里350日元的菜就可以把价格记为35
+ *  budget: Number, // 默认预算
+ *  companyName: String,
+ *  companyLink: String,
+ *  menu: SaizeriyaMenuItem[],
+ *  drinkItem: SaizeriyaMenuItem,
+ *  rollDrink: (abnormal: Boolean) => String, // 生成推荐的畅饮，参数为是否启用“自由搭配的乐趣”
+ * }} SaizeriyaMenu
  */
 
 import './style.css';
-/** @type {SaizeriyaMenuItem[]} */
-import menu from './menu.json';
 
-// 对畅饮进行特殊处理
-const menuDrink = menu.find(e => e.id === 1888);
-menu.splice(menu.indexOf(menuDrink), 1);
-const menuNoDrink = menu.find(e => e.id === 1777);
-menu.splice(menu.indexOf(menuNoDrink), 1);
-
-const menuPriceMin = Math.min(...menu.map(e => e.price));
-const menuPriceTotal = menu.map(e => e.price).reduce((acc, cur) => acc += cur, 0);
-
-/**
- * @param {Number} min
- * @param {Number} max
- * @returns {Number}
- */
-const randomInt = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
-/**
- * @template {T}
- * @param {T[]} arr
- * @returns {T}
- */
-const randomChoice = arr => arr[randomInt(0, arr.length - 1)];
-
-createApp({
+const app = {
     isDark: false,
     showResult: false,
-    menuPriceMin,
-    menuPriceTotal,
+    /** @type {Record<String, String>} */
+    region: {
+        'gd': '广东',
+        'sh': '上海',
+        // 'hk': '香港',
+        // 'jp': '日本',
+    },
+    regionMenuLoading: false,
+    /** @type {SaizeriyaMenu} */
+    regionMenu: null,
+    menuPriceMin: 0,
+    menuPriceTotal: 0,
+    /** @type {SaizeriyaMenuItem} */
+    menuDrink: null,
     budgetMin: null,
     budgetMax: null,
-    categoryFilter: Array.from(new Set(menu.map(e => e.category))).map(e => ({category: e, enabled: true})),
+    /** @type {{category: String, enabled: Boolean}[]} */
+    categoryFilter: [],
     blacklistExpr: '',
     /** @type {SaizeriyaMenuItem[]} */
     result: [],
@@ -54,35 +55,51 @@ createApp({
     resultImage: '',
 
     /**
-     * @param {Number} e
-     * @returns {String}
+     * @param {String} region
+     * @returns {Promise<null>}
      */
-    formatPrice(e) {
-        return '¥' + e.toFixed(2);
+    async loadMenu(region) {
+        try {
+            this.regionMenuLoading = true;
+            this.regionMenu = await import(`./saizeriya-menu/${region}/index.js`).then(e => e.default);
+            this.menuPriceMin = Math.min(...this.regionMenu.menu.map(e => e.price));
+            this.menuPriceTotal = this.regionMenu.menu.map(e => e.price).reduce((acc, cur) => acc += cur, 0);
+            this.categoryFilter = Array.from(new Set(this.regionMenu.menu.map(e => e.category))).map(e => ({category: e, enabled: true}));
+            this.blacklistExpr = '';
+            this.result = [];
+            this.qrImage = '';
+            const u = new URL(location.href);
+            u.searchParams.set('region', region);
+            history.replaceState(null, null, u);
+        } catch (err) {
+            alert(err);
+        } finally {
+            this.regionMenuLoading = false;
+        }
     },
 
     autoSetBudget() {
-        const budgetInputMin = parseInt(this.budgetMin);
-        const budgetInputMax = parseInt(this.budgetMax);
+        const budgetMin = Math.ceil(parseInt(this.budgetMin) / this.regionMenu.priceGCD);
+        const budgetMax = Math.floor(parseInt(this.budgetMax) / this.regionMenu.priceGCD);
         let mid;
-        if (isNaN(budgetInputMin) && isNaN(budgetInputMax)) {
-            mid = 30;
-        } else if (isNaN(budgetInputMin)) {
-            mid = budgetInputMax;
-        } else if (isNaN(budgetInputMax)) {
-            mid = budgetInputMin;
+        if (isNaN(budgetMin) && isNaN(budgetMax)) {
+            mid = this.regionMenu.budget;
+        } else if (isNaN(budgetMin)) {
+            mid = budgetMax;
+        } else if (isNaN(budgetMax)) {
+            mid = budgetMin;
         } else {
-            mid = (budgetInputMin + budgetInputMax) / 2;
+            mid = (budgetMin + budgetMax) / 2;
         }
-        this.budgetMin = Math.round(mid * .8);
-        this.budgetMax = Math.round(mid * 1.2);
+        this.budgetMin = Math.round(mid * .8) * this.regionMenu.priceGCD;
+        this.budgetMax = Math.round(mid * 1.2) * this.regionMenu.priceGCD;
     },
 
     rollMenu() {
         this.result.length = 0;
 
-        let budgetMin = parseInt(this.budgetMin);
-        let budgetMax = parseInt(this.budgetMax);
+        let budgetMin = Math.ceil(parseInt(this.budgetMin) / this.regionMenu.priceGCD);
+        let budgetMax = Math.floor(parseInt(this.budgetMax) / this.regionMenu.priceGCD);
         if (isNaN(budgetMin) && isNaN(budgetMax)) {
             alert('请输入预算…_φ(･ω･` )');
             return;
@@ -97,17 +114,17 @@ createApp({
             [budgetMin, budgetMax] = [budgetMax, budgetMin];
             [this.budgetMin, this.budgetMax] = [this.budgetMax, this.budgetMin];
         }
-        if (budgetMin > menuPriceTotal || budgetMax < menuPriceMin) {
+        if (budgetMin > this.menuPriceTotal || budgetMax < this.menuPriceMin) {
             return;
         }
-        if (budgetMax > menuPriceTotal) {
-            budgetMax = menuPriceTotal;
+        if (budgetMax > this.menuPriceTotal) {
+            budgetMax = this.menuPriceTotal;
         }
 
         // 根据筛选初始化菜单
         const blacklistCategory = new Set(this.categoryFilter.filter(e => !e.enabled).map(e => e.category));
-        const blacklistId = new Set(this.blacklistExpr.split(' ').map(e => parseInt(e)));
-        const m = menu.filter(e => !blacklistId.has(e.id) && !blacklistCategory.has(e.category));
+        const blacklistId = new Set(this.blacklistExpr.split(' ').filter(Boolean));
+        const m = this.regionMenu.menu.filter(e => !blacklistId.has(String(e.id)) && !blacklistCategory.has(e.category));
         if (!m.length) return;
 
         // 为了使每次运行的结果不一样，将菜单随机打乱
@@ -117,10 +134,10 @@ createApp({
         }
 
         // 是否添加畅饮
-        const enableDrink = Math.random() < this.drinkProbability && budgetMin >= menuDrink.price;
+        const enableDrink = Math.random() < this.drinkProbability && budgetMin >= this.regionMenu.drinkItem.price;
         if (enableDrink) {
-            budgetMin -= menuDrink.price;
-            budgetMax -= menuDrink.price;
+            budgetMin -= this.regionMenu.drinkItem.price;
+            budgetMax -= this.regionMenu.drinkItem.price;
         }
 
         /** @type {Set<Number>} 已经尝试过的预算值 */
@@ -138,13 +155,14 @@ createApp({
             this.result.length = 0;
 
             // 随机决定本次的预算值
+            /** @type {Number} */
             let budget;
             do {
                 budget = randomInt(budgetMin, budgetMax);
             } while (budgetTried.has(budget));
             budgetTried.add(budget);
 
-            if (budget === menuPriceTotal) {
+            if (budget === this.menuPriceTotal) {
                 this.result.push(...m);
             } else {
                 // 算法 - 动态规划法（三）子集和问题(Subset sum problem) - 个人文章 - SegmentFault 思否
@@ -192,35 +210,15 @@ createApp({
         }
 
         if (enableDrink) {
-            this.result.push(menuDrink);
-            switch (this.drinkMix ? randomInt(4, 6) : randomInt(0, 3)) {
-                case 0:
-                    this.drinkRecommendation = `热饮（${randomChoice(['拿铁咖啡', '卡布奇诺', '热牛奶', '美式咖啡', '意式浓缩咖啡', '香沫咖啡'])}）`;
-                    break;
-                case 1:
-                    this.drinkRecommendation = `茶包（${randomChoice(['高山绿茶', '玄米茶', '红茶', '茉莉花茶', '菊花茶', '普洱'])}）`;
-                    break;
-                case 2:
-                    this.drinkRecommendation = `汽水（${randomChoice(['可口可乐', '雪碧', '柠檬红茶', '芬达'])}）`;
-                    break;
-                case 3:
-                    this.drinkRecommendation = `果汁（${randomChoice(['黑加仑汁', '草莓番石榴汁', '芒果汁', '橙汁'])}）`;
-                    break;
-                case 4:
-                    this.drinkRecommendation = `热奶茶（${randomChoice(['高山绿茶', '玄米茶', '红茶', '茉莉花茶', '菊花茶', '普洱'])}+热牛奶）`;
-                    break;
-                case 5:
-                    this.drinkRecommendation = `碳酸果汁（${randomChoice(['可口可乐', '雪碧', '柠檬红茶', '芬达'])}+${randomChoice(['黑加仑汁', '草莓番石榴汁', '芒果汁', '橙汁'])}）`;
-                    break;
-                case 6:
-                    this.drinkRecommendation = this.result.find(e => e.id === 1738) ? `阿芙佳朵（香草冰激凌+意式浓缩咖啡）` : `气泡咖啡（冰块+雪碧+意式浓缩咖啡）`;
-                    break;
-            }
-        } else {
-            this.result.push(menuNoDrink);
+            this.result.push(this.regionMenu.drinkItem);
+            this.drinkRecommendation = this.regionMenu.rollDrink(this.drinkMix);
         }
-        this.result.sort((a, b) => a.id - b.id);
-        this.showResult = true;
+        if (!this.result.length) {
+            alert('居然找不到符合要求的点餐方案……( >﹏<。)');
+        } else {
+            this.result.sort((a, b) => a.id - b.id);
+            this.showResult = true;
+        }
     },
 
     async saveMenu() {
@@ -233,8 +231,12 @@ createApp({
                 document.body.appendChild(el);
             })) : import('html2canvas').then(e => e.default),
             this.qrImage || new Promise((resolve, reject) => {
+                const u = new URL(location.href);
+                const r = u.searchParams.get('region');
+                Array.from(u.searchParams.keys()).forEach(k => u.searchParams.delete(k));
+                u.searchParams.set('region', r);
                 const qrUrl = new URL('https://quickchart.io/qr');
-                qrUrl.searchParams.set('text', location.href.split('?')[0]);
+                qrUrl.searchParams.set('text', u.toString());
                 qrUrl.searchParams.set('ecLevel', 'L');
                 qrUrl.searchParams.set('margin', 0);
                 qrUrl.searchParams.set('format', 'svg');
@@ -283,8 +285,18 @@ createApp({
         const m = matchMedia('(prefers-color-scheme:dark)');
         m.addEventListener('change', () => this.isDark = m.matches);
         this.isDark = m.matches;
+
+        const u = new URL(location.href);
+        if (this.region.hasOwnProperty(u.searchParams.get('region'))) {
+            this.loadMenu(u.searchParams.get('region'));
+        } else {
+            u.searchParams.delete('region');
+            history.replaceState(null, null, u);
+        }
     },
-}).mount();
+};
+
+createApp(app).mount();
 
 /**
  * @param {String} label
