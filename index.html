@@ -33,7 +33,7 @@
                 <div v-else style="text-align:center">
                     <button
                         v-for="k in Object.keys(region)"
-                        class="nes-btn" style="margin:0 1rem"
+                        class="nes-btn" style="margin:1rem"
                         @click="loadMenu(k)"
                     >{{ region[k] }}</button>
                 </div>
@@ -202,7 +202,7 @@
                         </div>
                     </div>
                     <div style="margin:1rem 0">
-                        <span v-if="drinkRecommendation">畅饮推荐：{{ drinkRecommendation }}<br></span>
+                        <span v-if="drinkRecommendation">畅饮推荐：<span :style="{'font-family': `&#34;Fusion Pixel 12px Proportional ${regionMenu.lang}&#34;, sans-serif`}">{{ drinkRecommendation }}</span><br></span>
                         总消费：<span class="nes-text is-success">{{ regionMenu.priceFormat(regionMenu.priceGCD * result.map(e => e.price).reduce((acc, cur) => acc += cur, 0)) }}</span>
                     </div>
                 </div>
@@ -230,7 +230,7 @@
                     © 2023 ✨小透明・宸✨
                     <a id="source" href="https://github.com/TransparentLC/saizeriya" target="_blank" rel="noreferrer noopener">源代码</a>
                     <br>
-                    <span v-if="regionMenu">菜式名称和图片的相关权利归<a :href="regionMenu.companyLink" target="_blank" rel="noreferrer noopener">{{ regionMenu.companyName }}</a>所有，与本网页没有关联。</span>
+                    <span v-if="regionMenu">菜式名称和图片的相关权利归<a :href="regionMenu.companyLink" target="_blank" rel="noreferrer noopener" :style="{'font-family': `&#34;Fusion Pixel 12px Proportional ${regionMenu.lang}&#34;, sans-serif`}">{{ regionMenu.companyName }}</a>所有，与本网页没有关联。</span>
                 </small>
             </div>
 

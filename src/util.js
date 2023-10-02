@@ -23,3 +23,9 @@ export const pickItem = (arr, fn) => {
     arr.splice(arr.indexOf(e), 1);
     return e;
 };
+
+/**
+ * @param {Number} x
+ * @returns {String}
+ */
+export const numberComma = x => x.toString().replace(/\d+/, n => n.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,'));

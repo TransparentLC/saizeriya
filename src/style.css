@@ -12,11 +12,11 @@
     font-display: swap;
 }
 
-/* @font-face {
+@font-face {
     font-family: "Fusion Pixel 12px Proportional ja";
     src: url("fusion-pixel-font/fusion-pixel-12px-proportional-ja-subset.woff2");
     font-display: swap;
-} */
+}
 
 html {
     font-size: 12px;

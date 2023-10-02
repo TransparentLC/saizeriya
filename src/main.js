@@ -33,7 +33,8 @@ const app = {
         'gd': '广东',
         'sh': '上海',
         'hk': '香港',
-        // 'jp': '日本',
+        'jp': '日本',
+        'jp-cn': '日本（中文菜单）',
     },
     regionMenuLoading: false,
     /** @type {SaizeriyaMenu} */
