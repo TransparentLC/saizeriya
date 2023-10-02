@@ -14,5 +14,5 @@ export default {
     companyLink: 'https://www.saizeriya.com.hk',
     menu,
     drinkItem,
-    rollDrink: () => '', // TODO
+    rollDrink: () => '（TODO：暢飲資訊暫缺）', // TODO
 };
