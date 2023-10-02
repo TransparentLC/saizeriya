@@ -31,13 +31,11 @@
                 <h2 class="title">地区选择</h2>
                 <div v-if="regionMenuLoading" style="text-align:center">Loading...</div>
                 <div v-else style="text-align:center">
-                    <label v-for="k in Object.keys(region)" style="margin-right:1rem" @click="loadMenu(k)">
-                        <input
-                            :value="k"
-                            name="region"
-                            type="radio" class="nes-radio" :class="{'is-dark': isDark}"
-                        ><span>{{ region[k] }}</span>
-                    </label>
+                    <button
+                        v-for="k in Object.keys(region)"
+                        class="nes-btn" style="margin:0 1rem"
+                        @click="loadMenu(k)"
+                    >{{ region[k] }}</button>
                 </div>
 
             </div>
@@ -103,7 +101,10 @@
                 </label>
                 <details>
                     <summary class="nes-pointer">菜品筛选</summary>
-                    <div class="col-1-2">
+                    <div
+                        class="col-1-2"
+                        :style="{'font-family': `&#34;Fusion Pixel 12px Proportional ${regionMenu.lang}&#34;, sans-serif`}"
+                    >
                         <div v-for="item in categoryFilter" style="display:flex">
                             <span style="flex-grow:1">{{ item.category }}</span>
                             <label style="margin-left:1rem">
@@ -177,29 +178,31 @@
             <div v-if="regionMenu && showResult" style="margin:2rem 0">
                 <div id="menu-result">
                     <h2 style="text-align:center">你点了 {{ result.length }} 份菜</h2>
-                    <div
-                        v-for="item in result"
-                        :key="item.id"
-                        class="nes-container is-rounded" :class="{'is-dark': isDark}"
-                        style="display:flex;align-items:center;margin:1rem 0"
-                    >
-                        <div style="flex-grow:1">
-                            {{ item.id }} {{ item.name }}
-                            <br>
-                            <span class="nes-text is-success">{{ regionMenu.priceFormat(regionMenu.priceGCD * item.price) }}</span>
-                            <span class="nes-text is-disabled">{{ item.category }}</span>
+                    <div :style="{'font-family': `&#34;Fusion Pixel 12px Proportional ${regionMenu.lang}&#34;, sans-serif`}">
+                        <div
+                            v-for="item in result"
+                            :key="item.id"
+                            class="nes-container is-rounded" :class="{'is-dark': isDark}"
+                            style="display:flex;align-items:center;margin:1rem 0"
+                        >
+                            <div style="flex-grow:1">
+                                {{ item.id }} {{ item.name }}
+                                <br>
+                                <span class="nes-text is-success">{{ regionMenu.priceFormat(regionMenu.priceGCD * item.price) }}</span>
+                                <span class="nes-text is-disabled">{{ item.category }}</span>
+                            </div>
+                            <picture v-if="item.image" style="width:30%;flex-shrink:0;margin-left:1rem">
+                                <source
+                                    v-for="img in Object.entries(item.image)"
+                                    :type="img[0]"
+                                    :srcset="img[1]"
+                                >
+                                <img :src="item.image['image/jpeg']" style="width:100%;height:100%;object-fit:cover;border-radius:.25rem">
+                            </picture>
                         </div>
-                        <picture v-if="item.image" style="width:30%;flex-shrink:0;margin-left:1rem">
-                            <source
-                                v-for="img in Object.entries(item.image)"
-                                :type="img[0]"
-                                :srcset="img[1]"
-                            >
-                            <img :src="item.image['image/jpeg']" style="width:100%;height:100%;object-fit:cover;border-radius:.25rem">
-                        </picture>
                     </div>
                     <div style="margin:1rem 0">
-                        <span v-if="result.find(e => e === regionMenu.drinkItem)">畅饮推荐：{{ drinkRecommendation }}<br></span>
+                        <span v-if="drinkRecommendation">畅饮推荐：{{ drinkRecommendation }}<br></span>
                         总消费：<span class="nes-text is-success">{{ regionMenu.priceFormat(regionMenu.priceGCD * result.map(e => e.price).reduce((acc, cur) => acc += cur, 0)) }}</span>
                     </div>
                 </div>

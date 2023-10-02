@@ -9,12 +9,13 @@ export default {
     priceFormat: x => '¥' + x.toFixed(2),
     priceGCD: 1,
     budget: 30,
+    lang: 'zh_hans',
     companyName: '广州萨莉亚餐饮有限公司',
     companyLink: 'https://gz-saizeriya.com.cn/',
     menu,
     drinkItem,
-    rollDrink: abnomal => {
-        switch (abnomal ? randomInt(4, 6) : randomInt(0, 3)) {
+    rollDrink: abnormal => {
+        switch (abnormal ? randomInt(4, 6) : randomInt(0, 3)) {
             case 0:
                 return `热饮（${randomChoice(['拿铁咖啡', '卡布奇诺', '热牛奶', '美式咖啡', '意式浓缩咖啡', '香沫咖啡'])}）`;
             case 1:

@@ -14,6 +14,7 @@ import { randomChoice, randomInt } from './util.js';
  *  priceFormat: (x: Number) => String, // 价格格式化，例如把32转换成￥32.00这样
  *  priceGCD: Number, // 价格的最大公因数，例如日本萨莉亚的价格都是10日元的倍数，那么在菜单里350日元的菜就可以把价格记为35
  *  budget: Number, // 默认预算
+ *  lang: "zh_hans" | "zh_hant" | "ja", // 菜单部分使用的字体
  *  companyName: String,
  *  companyLink: String,
  *  menu: SaizeriyaMenuItem[],
@@ -31,7 +32,7 @@ const app = {
     region: {
         'gd': '广东',
         'sh': '上海',
-        // 'hk': '香港',
+        'hk': '香港',
         // 'jp': '日本',
     },
     regionMenuLoading: false,
@@ -212,6 +213,8 @@ const app = {
         if (enableDrink) {
             this.result.push(this.regionMenu.drinkItem);
             this.drinkRecommendation = this.regionMenu.rollDrink(this.drinkMix);
+        } else {
+            this.drinkRecommendation = '';
         }
         if (!this.result.length) {
             alert('居然找不到符合要求的点餐方案……( >﹏<。)');
