@@ -19,6 +19,7 @@ import { randomChoice, randomInt } from './util.js';
  *  companyLink: String,
  *  menu: SaizeriyaMenuItem[],
  *  drinkItem: SaizeriyaMenuItem,
+ *  allowDrinkMix: Boolean, // 是否显示“自由搭配的乐趣”选项
  *  rollDrink: (abnormal: Boolean) => String, // 生成推荐的畅饮，参数为是否启用“自由搭配的乐趣”
  * }} SaizeriyaMenu
  */
@@ -67,6 +68,7 @@ const app = {
             this.menuPriceMin = Math.min(...this.regionMenu.menu.map(e => e.price));
             this.menuPriceTotal = this.regionMenu.menu.map(e => e.price).reduce((acc, cur) => acc += cur, 0);
             this.categoryFilter = Array.from(new Set(this.regionMenu.menu.map(e => e.category))).map(e => ({category: e, enabled: true}));
+            this.budgetMin = this.budgetMax = null;
             this.blacklistExpr = '';
             this.result = [];
             this.qrImage = '';

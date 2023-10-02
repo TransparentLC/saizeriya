@@ -95,7 +95,7 @@
                         ><span title="50%概率">随机</span>
                     </label>
                 </div>
-                <label>
+                <label v-if="regionMenu.allowDrinkMix">
                     <input v-model="drinkMix" type="checkbox" class="nes-checkbox" :class="{'is-dark': isDark}">
                     <span>“自由搭配的乐趣！” <a href="https://saizeriya.oss-cn-guangzhou.aliyuncs.com/upload/portal/20230109/202301091654376284.jpg" target="_blank" rel="noreferrer noopener">(?)</a></span>
                 </label>

@@ -14,6 +14,7 @@ export default {
     companyLink: 'https://gz-saizeriya.com.cn/',
     menu,
     drinkItem,
+    allowDrinkMix: true,
     rollDrink: abnormal => {
         switch (abnormal ? randomInt(4, 6) : randomInt(0, 3)) {
             case 0:

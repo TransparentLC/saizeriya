@@ -14,6 +14,7 @@ export default {
     companyLink: 'https://www.saizeriya.co.jp/',
     menu,
     drinkItem,
+    allowDrinkMix: false,
     rollDrink: () => randomChoice([
         '山葡萄', '白葡萄', '可口可乐', '甜瓜苏打',
         '橙汁', '汤力水', '蔬果汁', '冰咖啡',
