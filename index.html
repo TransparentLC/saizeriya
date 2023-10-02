@@ -35,7 +35,7 @@
                         <input
                             :value="k"
                             name="region"
-                            type="radio" class="nes-radio is-dark"
+                            type="radio" class="nes-radio" :class="{'is-dark': isDark}"
                         ><span>{{ region[k] }}</span>
                     </label>
                 </div>
