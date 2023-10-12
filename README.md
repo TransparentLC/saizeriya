@@ -2,7 +2,9 @@
 
 https://akarin.dev/saizeriya/
 
-如标题所示。
+![](https://github-production-user-asset-6210df.s3.amazonaws.com/47057319/274476068-bf66a5a3-71bc-4fa4-b1cf-e08fead342c1.jpg)
+
+如标题所示，可以设定预算范围和菜品分类，然后随机生成一份符合要求的菜单。
 
 很久以前群友的 bot 里有这样的功能（源代码可能是 [Ruan1337/saizeriyarandom.github.io](https://github.com/Ruan1337/saizeriyarandom.github.io)），在做自己的 bot 的时候尝试着自己重新写了一个（本质上其实是用动态规划解决的子集和问题），后来 bot 没办法用了就打算做成独立的网页版。
 
