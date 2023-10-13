@@ -14,6 +14,7 @@ export default {
     companyLink: 'https://www.saizeriya.co.jp/',
     menu,
     drinkItem,
+    allowDrinkMix: false,
     rollDrink: () => randomChoice([
         '山ブドウ', '白ブドウ', 'コカ・コーラ', 'メロンソーダ',
         'オレンジ', 'トニックウォーター', '野菜ジュース', 'アイスコーヒー',
