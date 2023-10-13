@@ -4,7 +4,7 @@ import fs from 'node:fs';
 const charsetBase = new Set('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~ \t\n\r\x0b\x0c'.split(''));
 
 for (const [lang, region] of [
-    ['zh_hans', ['gd', 'sh', 'jp-cn']],
+    ['zh_hans', ['gd', 'sh', 'bj', 'jp-cn']],
     ['zh_hant', ['hk']],
     ['ja', ['jp']],
 ]) {

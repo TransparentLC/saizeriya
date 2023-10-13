@@ -25,3 +25,6 @@
     * 菜单：https://www.saizeriya.com.hk/wp-content/uploads/20230710_GrandMenu.pdf
     * 在线点餐：https://saizeriya.self-order.app/saizeriya/#?type=****&shop=****&tn=****&qrtime=****&data=****
         * 点餐链接的二维码打印在小票上，结账后失效，所以并不能用来获取菜单数据。
+* 北京
+    * 没有在线点餐系统，也没有官网。
+    * 有群友提供了纸质菜单的照片：[正面](https://github-production-user-asset-6210df.s3.amazonaws.com/47057319/274942509-7192ad84-4404-4857-82f7-2a890dc72966.jpg) [反面](https://github-production-user-asset-6210df.s3.amazonaws.com/47057319/274942426-970ecfc0-d5ad-4b29-9798-b775c392f644.jpg)
