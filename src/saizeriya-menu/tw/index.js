@@ -6,7 +6,7 @@ const drinkItem = pickItem(menu, e => e.id === 65);
 
 /** @type {import('../../main.js').SaizeriyaMenu} */
 export default {
-    priceFormat: x => '$' + x,
+    priceFormat: x => 'NT$' + x,
     priceGCD: 5,
     budget: 40,
     lang: 'zh_hant',
