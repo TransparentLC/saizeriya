@@ -28,3 +28,6 @@
 * 北京
     * 没有在线点餐系统，也没有官网。
     * 有群友提供了纸质菜单的照片：[正面](https://github-production-user-asset-6210df.s3.amazonaws.com/47057319/274942509-7192ad84-4404-4857-82f7-2a890dc72966.jpg) [反面](https://github-production-user-asset-6210df.s3.amazonaws.com/47057319/274942426-970ecfc0-d5ad-4b29-9798-b775c392f644.jpg)
+* 台湾：
+    * 官网：http://www.saliya.com.tw/
+    * 菜单：http://www.saliya.com.tw/catalog_we.php?d=change

@@ -5,7 +5,7 @@ const charsetBase = new Set('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNO
 
 for (const [lang, region] of [
     ['zh_hans', ['gd', 'sh', 'bj', 'jp-cn']],
-    ['zh_hant', ['hk']],
+    ['zh_hant', ['hk', 'tw']],
     ['ja', ['jp']],
 ]) {
     const charset = new Set(charsetBase);
