@@ -229,7 +229,27 @@ const app = {
         }
     },
 
-    async saveMenu() {
+    getUrl() {
+        const u = new URL(location.href);
+        const r = u.searchParams.get('region');
+        Array.from(u.searchParams.keys()).forEach(k => u.searchParams.delete(k));
+        u.searchParams.set('region', r);
+        return u;
+    },
+
+    saveMenuText() {
+        const t = [
+            `你点了${this.result.length}份菜`,
+            ...this.result.map(e => `${e.id} ${e.name} ${this.regionMenu.priceFormat(this.regionMenu.priceGCD * e.price)}`),
+            `总消费：${this.regionMenu.priceFormat(this.regionMenu.priceGCD * this.result.map(e => e.price).reduce((acc, cur) => acc += cur, 0))}`,
+            '================',
+            '萨莉亚随机点餐',
+            this.getUrl().toString(),
+        ].join('\n')
+        navigator.clipboard.writeText(t).then(() => alert(`已将菜单复制到剪贴板：\n\n${t}`));
+    },
+
+    async saveMenuImage() {
         const [html2canvas, qrImage] = await Promise.all([
             __IS_PROD__ ? (window.html2canvas || new Promise((resolve, reject) => {
                 const el = document.createElement('script');
@@ -239,12 +259,8 @@ const app = {
                 document.body.appendChild(el);
             })) : import('html2canvas').then(e => e.default),
             this.qrImage || new Promise((resolve, reject) => {
-                const u = new URL(location.href);
-                const r = u.searchParams.get('region');
-                Array.from(u.searchParams.keys()).forEach(k => u.searchParams.delete(k));
-                u.searchParams.set('region', r);
                 const qrUrl = new URL('https://quickchart.io/qr');
-                qrUrl.searchParams.set('text', u.toString());
+                qrUrl.searchParams.set('text', this.getUrl().toString());
                 qrUrl.searchParams.set('ecLevel', 'L');
                 qrUrl.searchParams.set('margin', 0);
                 qrUrl.searchParams.set('format', 'svg');

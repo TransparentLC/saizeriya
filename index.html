@@ -213,16 +213,21 @@
                 >再 Roll 一次！</button>
                 <div class="col-1-2">
                     <button
-                        @click="showResult = false"
-                        class="nes-btn"
+                        @click="saveMenuText"
+                        class="nes-btn is-warning"
                         style="display:block;width:100%;margin:.5rem 0"
-                    >返回设定</button>
+                    >复制菜单</button>
                     <button
-                        @click="saveMenu"
+                        @click="saveMenuImage"
                         class="nes-btn is-warning"
                         style="display:block;width:100%;margin:.5rem 0"
                     >截图分享</button>
                 </div>
+                <button
+                    @click="showResult = false"
+                    class="nes-btn"
+                    style="display:block;width:100%;margin:.5rem 0"
+                >返回设定</button>
             </div>
 
             <div id="footer" style="text-align:center;line-height:1.5rem">

@@ -31,7 +31,7 @@ jobs:
           cd src/fusion-pixel-font
           # https://github.com/TakWolf/fusion-pixel-font/releases
           # FONT_VERSION=$(curl -s "https://api.github.com/repos/TakWolf/fusion-pixel-font/tags" | jq -r ".[0].name")
-          FONT_VERSION=2023.08.24
+          FONT_VERSION=2023.11.26
           wget \
             -O fusion-pixel-font-12px-proportional-woff2.zip \
             https://github.com/TakWolf/fusion-pixel-font/releases/download/${FONT_VERSION}/fusion-pixel-font-12px-proportional-woff2-v${FONT_VERSION}.zip
