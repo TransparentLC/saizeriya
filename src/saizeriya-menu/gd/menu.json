@@ -168,7 +168,7 @@
         "id": 1011,
         "name": "金枪鱼沙拉",
         "price": 12,
-        "category": "沙拉 汤",
+        "category": "沙拉",
         "image": {
             "image/avif": "image/gd/20001011.avif",
             "image/webp": "image/gd/20001011.webp",
@@ -278,7 +278,7 @@
         "id": 1012,
         "name": "水果沙拉",
         "price": 9,
-        "category": "沙拉 汤",
+        "category": "沙拉",
         "image": {
             "image/avif": "image/gd/20001012.avif",
             "image/webp": "image/gd/20001012.webp",
@@ -289,7 +289,7 @@
         "id": 1014,
         "name": "甜玉米沙拉",
         "price": 9,
-        "category": "沙拉 汤",
+        "category": "沙拉",
         "image": {
             "image/avif": "image/gd/20001014.avif",
             "image/webp": "image/gd/20001014.webp",
@@ -300,7 +300,7 @@
         "id": 1017,
         "name": "熟制虾仁沙拉",
         "price": 13,
-        "category": "沙拉 汤",
+        "category": "沙拉",
         "image": {
             "image/avif": "image/gd/20001017.avif",
             "image/webp": "image/gd/20001017.webp",
@@ -311,7 +311,7 @@
         "id": 1114,
         "name": "花蛤汤裙菜海鲜汤",
         "price": 9,
-        "category": "沙拉 汤",
+        "category": "汤",
         "image": {
             "image/avif": "image/gd/20001114.avif",
             "image/webp": "image/gd/20001114.webp",
@@ -322,7 +322,7 @@
         "id": 1112,
         "name": "玉米汤",
         "price": 9,
-        "category": "沙拉 汤",
+        "category": "汤",
         "image": {
             "image/avif": "image/gd/20001112.avif",
             "image/webp": "image/gd/20001112.webp",
@@ -333,7 +333,7 @@
         "id": 1118,
         "name": "蘑菇汤",
         "price": 9,
-        "category": "沙拉 汤",
+        "category": "汤",
         "image": {
             "image/avif": "image/gd/20001118.avif",
             "image/webp": "image/gd/20001118.webp",
@@ -344,7 +344,7 @@
         "id": 1113,
         "name": "番茄蔬菜汤",
         "price": 9,
-        "category": "沙拉 汤",
+        "category": "汤",
         "image": {
             "image/avif": "image/gd/20001113.avif",
             "image/webp": "image/gd/20001113.webp",
@@ -1031,28 +1031,6 @@
             "image/avif": "image/gd/20001908.avif",
             "image/webp": "image/gd/20001908.webp",
             "image/jpeg": "image/gd/20001908.jpg"
-        }
-    },
-    {
-        "id": 122,
-        "name": "餐具包",
-        "price": 0,
-        "category": "打包用品",
-        "image": {
-            "image/avif": "image/gd/20000122.avif",
-            "image/webp": "image/gd/20000122.webp",
-            "image/jpeg": "image/gd/20000122.jpg"
-        }
-    },
-    {
-        "id": 121,
-        "name": "打包盒",
-        "price": 1,
-        "category": "打包用品",
-        "image": {
-            "image/avif": "image/gd/20000121.avif",
-            "image/webp": "image/gd/20000121.webp",
-            "image/jpeg": "image/gd/20000121.jpg"
         }
     },
     {
