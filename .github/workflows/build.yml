@@ -10,11 +10,10 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: latest
-          architecture: x64
           check-latest: true
           cache: npm
           cache-dependency-path: package.json
@@ -30,8 +29,7 @@ jobs:
         run: |
           cd src/fusion-pixel-font
           # https://github.com/TakWolf/fusion-pixel-font/releases
-          # FONT_VERSION=$(curl -s "https://api.github.com/repos/TakWolf/fusion-pixel-font/tags" | jq -r ".[0].name")
-          FONT_VERSION=2023.11.26
+          FONT_VERSION=$(curl -s "https://api.github.com/repos/TakWolf/fusion-pixel-font/tags" | jq -r ".[0].name")
           wget \
             -O fusion-pixel-font-12px-proportional-woff2.zip \
             https://github.com/TakWolf/fusion-pixel-font/releases/download/${FONT_VERSION}/fusion-pixel-font-12px-proportional-woff2-v${FONT_VERSION}.zip
@@ -40,13 +38,13 @@ jobs:
       - name: Build
         run: npm run build
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: dist
           publish_branch: gh-pages
       - name: Upload stats
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-stats
           path: stats.html
