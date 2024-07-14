@@ -169,7 +169,7 @@
                     style="display:block;width:100%;margin:1rem 0;margin-bottom:0"
                 >Roll 一份菜单！</button>
                 <button
-                    @click="regionMenu = null; const u = new URL(location.href); u.searchParams.delete('region'); history.replaceState(null, null, u);"
+                    @click="document.title = '萨莉亚随机点餐'; regionMenu = null; const u = new URL(location.href); u.searchParams.delete('region'); history.replaceState(null, null, u);"
                     class="nes-btn"
                     style="display:block;width:100%;margin:1rem 0;margin-bottom:0"
                 >返回地区选择</button>
