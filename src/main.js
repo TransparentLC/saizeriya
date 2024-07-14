@@ -1,5 +1,5 @@
 import { createApp } from 'petite-vue';
-import { randomChoice, randomInt } from './util.js';
+import { randomInt } from './util.js';
 
 /**
  * @typedef {{
@@ -11,6 +11,7 @@ import { randomChoice, randomInt } from './util.js';
  * }} SaizeriyaMenuItem
  *
  * @typedef {{
+ *  altTitle: [String], // 用来替换标题中的“萨莉亚”
  *  priceFormat: (x: Number) => String, // 价格格式化，例如把32转换成￥32.00这样
  *  priceGCD: Number, // 价格的最大公因数，例如日本萨莉亚的价格都是10日元的倍数，那么在菜单里350日元的菜就可以把价格记为35
  *  budget: Number, // 默认预算
@@ -38,6 +39,7 @@ const app = {
         'tw': '台湾',
         'jp': '日本',
         'jp-cn': '日本（中文菜单）',
+        'phwow': '必胜客 WOW（New!）',
     },
     regionMenuLoading: false,
     /** @type {SaizeriyaMenu} */
@@ -74,6 +76,7 @@ const app = {
             this.blacklistExpr = '';
             this.result = [];
             this.qrImage = '';
+            document.title = `${this.regionMenu.altTitle || '萨莉亚'}随机点餐`;
             const u = new URL(location.href);
             u.searchParams.set('region', region);
             history.replaceState(null, null, u);
@@ -140,7 +143,7 @@ const app = {
         }
 
         // 是否添加畅饮
-        const enableDrink = Math.random() < this.drinkProbability && budgetMin >= this.regionMenu.drinkItem.price;
+        const enableDrink = Math.random() < this.drinkProbability && budgetMin >= this.regionMenu.drinkItem?.price;
         if (enableDrink) {
             budgetMin -= this.regionMenu.drinkItem.price;
             budgetMax -= this.regionMenu.drinkItem.price;

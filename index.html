@@ -21,7 +21,7 @@
     </head>
     <body>
         <div v-scope @vue:mounted="mounted">
-            <h1 id="title" style="text-align:center;font-size:4rem">萨莉亚！<br>随机点餐</h1>
+            <h1 id="title" style="text-align:center;font-size:4rem">{{ regionMenu?.altTitle || '萨莉亚'}}！<br>随机点餐</h1>
 
             <div
                 v-if="!regionMenu"
@@ -71,7 +71,7 @@
                     class="nes-btn"
                     style="display:block;width:100%;margin:1rem 0"
                 >设定为平均的 +/- 20%</button>
-                <div style="display:flex">
+                <div v-if="regionMenu.drinkItem" style="display:flex">
                     <span style="flex-grow:1">畅饮</span>
                     <label style="margin-left:1rem">
                         <input
