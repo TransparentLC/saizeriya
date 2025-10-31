@@ -30,7 +30,7 @@ for (const [lang, region] of [
     childProcess.execFileSync(
         'pyftsubset',
         [
-            `fusion-pixel-12px-proportional-${lang}.woff2`,
+            `fusion-pixel-12px-proportional-${lang}.otf.woff2`,
             '--text-file=charset.txt',
             `--output-file=fusion-pixel-12px-proportional-${lang}-subset.woff2`,
             '--flavor=woff2',
